@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islami/sure_detalis/item_verse.dart';
+import 'package:provider/provider.dart';
 
+import '../home/provider/app_provider.dart';
+
+// ignore: camel_case_types
 class sureDetalis extends StatefulWidget {
   static const routeName = 'sure_detalis';
+
+  sureDetalis({Key? key}) : super(key: key);
 
   @override
   State<sureDetalis> createState() => _sureDetalisState();
@@ -14,11 +20,12 @@ class _sureDetalisState extends State<sureDetalis> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<appProvider>(context);
     var args = ModalRoute.of(context)?.settings.arguments as sureDetalisArgs;
     if (verses.isEmpty) loadFile(args.index);
     return Stack(children: [
       Image.asset(
-        'assets/image/main_backgrouned.png',
+        provider.getMainBackGround(),
         width: double.infinity,
         height: double.infinity,
         fit: BoxFit.fill,
@@ -33,15 +40,8 @@ class _sureDetalisState extends State<sureDetalis> {
           ),
         ),
         body: verses.length == 0
-            ? Center(child: CircularProgressIndicator())
-            : ListView.separated(
-                separatorBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 50),
-                    height: 1,
-                    color: Theme.of(context).primaryColor,
-                  );
-                },
+            ? const Center(child: CircularProgressIndicator())
+            : ListView.builder(
                 itemBuilder: (_, index) {
                   return itemVerse(verses[index]);
                 },
@@ -52,14 +52,17 @@ class _sureDetalisState extends State<sureDetalis> {
   }
 
   void loadFile(int index) async {
-    String content =
-        await rootBundle.loadString('assets/files/${index + 1}.txt');
-    List<String> lines = content.split("\n");
+    String content = await rootBundle.loadString(
+        'assets/files/${index + 1}.txt');
+    List<String>lines = content.split("\n");
     verses = lines;
-    setState(() {});
+    setState(() {
+
+    });
   }
 }
 
+// ignore: camel_case_types
 class sureDetalisArgs {
   String name;
   int index;

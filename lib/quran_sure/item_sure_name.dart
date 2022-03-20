@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:islami/sure_detalis/sure_detalis.dart';
 
+// ignore: must_be_immutable, camel_case_types
 class itemSure extends StatelessWidget {
   String name;
   int index;
@@ -22,7 +23,7 @@ class itemSure extends StatelessWidget {
         child: Text(
           name,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subtitle1,
+          style: Theme.of(context).textTheme.headline1,
         ),
       ),
     );

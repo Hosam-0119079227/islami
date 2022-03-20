@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:islami/Ahades/ahdeth.dart';
 import 'package:islami/home/Sebha.dart';
-import 'package:islami/home/qurann.dart';
+import 'package:islami/home/provider/app_provider.dart';
 import 'package:islami/home/radio.dart';
+import 'package:islami/settings/setting.dart';
+import 'package:provider/provider.dart';
 
 import 'quran_sure/ic_quran.dart';
 
+// ignore: camel_case_types
 class homeScreen extends StatefulWidget {
   static const String routeName = 'home';
+
+  const homeScreen({Key? key}) : super(key: key);
 
   @override
   State<homeScreen> createState() => _homeScreenState();
 }
 
+// ignore: camel_case_types
 class _homeScreenState extends State<homeScreen> {
   int currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<appProvider>(context);
     return Stack(
       children: [
         Image.asset(
-          'assets/image/main_backgrouned.png',
+          provider.getMainBackGround(),
           width: double.infinity,
           height: double.infinity,
           fit: BoxFit.fill,
@@ -29,7 +36,7 @@ class _homeScreenState extends State<homeScreen> {
           appBar: AppBar(
             title: Center(
               child: Text(
-                'ISLAMI',
+                'Islami',
                 style: Theme.of(context).textTheme.headline1,
               ),
             ),
@@ -44,19 +51,21 @@ class _homeScreenState extends State<homeScreen> {
                 setState(() {});
               },
               currentIndex: currentIndex,
-              items: [
+              items: const [
                 BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage('assets/image/ic_quran.png')),
+                    icon: ImageIcon(AssetImage('assets/image/quran_ici.png')),
                     label: 'Quran'),
+                BottomNavigationBarItem(
+                    icon: ImageIcon(AssetImage('assets/image/hadeth_ici.png')),
+                    label: 'Ahades'),
                 BottomNavigationBarItem(
                     icon: ImageIcon(AssetImage('assets/image/radio.png')),
                     label: 'Radio'),
                 BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage('assets/image/quran.png')),
-                    label: 'Quran'),
-                BottomNavigationBarItem(
                     icon: ImageIcon(AssetImage('assets/image/sebha.png')),
                     label: 'Sebha'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.settings), label: 'Setting'),
               ],
             ),
           ),
@@ -68,8 +77,9 @@ class _homeScreenState extends State<homeScreen> {
 
   List<Widget> tabs = [
     icQuran(),
-    Quran(),
-    Sabha(),
+    HadethTab(),
     radio(),
+    Sabha(),
+    setting()
   ];
 }

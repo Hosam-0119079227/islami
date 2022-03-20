@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Quran extends StatelessWidget {
+class radio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
